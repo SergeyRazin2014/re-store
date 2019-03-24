@@ -1,13 +1,15 @@
 import React from 'react';
-import withBookStoreService from '../hoc'
+import {Route, Switch} from 'react-router-dom';
+import {HomePage, CartPage} from '../pages';
 
 
 const App = ({ bookstoreService }) => {
 
     return (
-        <div className='app'>
-            hello world
-        </div>
+        <Switch>
+            <Route path="/" component = {HomePage} exact/>
+            <Route path="/cart" component = {CartPage}/>
+        </Switch>
     )
 }
 

@@ -1,13 +1,11 @@
 const initialState = {
-    books: []
+    books: [ ]
 }
-
-/*
-по правилам, если в редусер не передали стейт, то нужно вызвать базовый стейт (initialState)
-*/
 
 //ФУНКЦИЯ РЕДУСЕР (ОНА ВОЗВРАЩАЕТ НОВОЕ СОСТОЯНИЕ(СТЕЙТ) ПРИ ТОМ ИЛИ ИНОМ СОБЫТИИ
 const reducer = (state = initialState, action) => {
+
+    debugger;
 
     switch (action.type) {
         case 'BOOKS_LOADED': //ЕСЛИ ЭТО СОБЫТИЕ - КНИГИ БЫЛИ ЗАГРУЖЕНЫ
@@ -18,8 +16,6 @@ const reducer = (state = initialState, action) => {
         default: return state; //ЕСЛИ МЫ НЕ МОЖЕМ ОПРЕДЕЛИТЬ КАКОЕ СОБЫТИЕ ПРОИЗОШЛО - ВОЗВРАЩАЕМ ПРОСТО СТЕЙТ КОТОРЫЙ БЫЛ ЗАДАН НА ВХОД
 
     }
-
-    return state;
 }
 
 export default reducer;
