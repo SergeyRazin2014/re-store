@@ -1,10 +1,11 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 const ShopHeader = ({ numItems, total }) => {
     return (
         <header >
-            <a href="#">ReStore</a>
-            <span>{numItems} items (${total})</span>
+            <Link to="/">ReStore</Link>  |  
+            <Link to="/cart">{numItems} items (${total})</Link>
         </header>
     )
 }

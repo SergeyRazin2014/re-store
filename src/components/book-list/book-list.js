@@ -2,28 +2,34 @@ import React from 'react';
 import BookListItem from '../book-list-item';
 import { connect } from 'react-redux';
 import { withBookStoreService } from '../hoc'; //ПОДКЛЮЧАЕМ НАШ hoc КОМПОНЕНТ КОТОРЫЙ ДОБАВЛЯЕТ В ДРУГОЙ КОМПОНЕНТ СЕРВИС ПОЛУЧЕНИЯ ДАННЫХ С СЕРВЕРА (Т.Е. ДАО)
-import { booksLoaded } from '../../actions';
+import { booksLoaded, booksRequested } from '../../actions';
+import Spinner from '../spinner';
 
 
 class BookList extends React.Component {
 
     //МЕТОД ЖИЗНЕННОГО ЦИКЛА
     componentDidMount() {
-        //получить данные 
-        const { bookstoreService } = this.props; //ПОЛУЧАЮ НАШ СЕРВИС (ДАО КЛАСС) ИЗ ПРОПЕРТЕЙ
-        const data = bookstoreService.getBooks(); //ЗАГРУЖАЮ ДАННЫЕ С СЕРВЕРА
-        console.log(data);
 
-        //ОТПРАВИТЬ ЗАГРУЖЕННЫЕ ДАННЫЕ В СТОР
-        this.props.booksLoaded(data);
+        debugger;
+
+        const { bookstoreService, booksLoaded, booksRequested } = this.props; //ПОЛУЧАЮ НАШ СЕРВИС (ДАО КЛАСС) ИЗ ПРОПЕРТЕЙ
+
+        booksRequested();  //ТУТ МЫ В СТОР УСТАНАВЛИВАЕМ loading = true //Т.Е. МЫ КАК БЫ ГОВОРИМ МЫ НАЧИНАЕМ ЗАГРУЗКУ КНИГ С СЕРВЕРА
+
+        bookstoreService.getBooks() //ЗАГРУЖАЮ ДАННЫЕ С СЕРВЕРА
+            .then((data) => {
+                booksLoaded(data); //ОТПРАВИТЬ ЗАГРУЖЕННЫЕ ДАННЫЕ В СТОР
+            })
     }
 
     render() {
 
+        const { books, loading } = this.props;
 
-        
-
-        const { books } = this.props;
+        if (loading) {
+            return <Spinner />
+        }
 
         let bookListItems = books.map((book) => {
             return <li key={book.id} ><BookListItem book={book} /></li>
@@ -37,14 +43,14 @@ class BookList extends React.Component {
     }
 }
 
-const mapStateToProps = ({ books }) => {
-    return { books }
+const mapStateToProps = ({ books, loading }) => {
+    return { books, loading }
 };
 
-//ПРОСТО ЗАВОРАЧИВАЕМ НАШ АКШН КРЕАТОР В ОБЪЕКТ
-// const mapDispatchToProps =  {
-//     booksLoaded
-// }
+const mapDispatchToProps = {
+    booksLoaded,
+    booksRequested
+}
 
 
-export default withBookStoreService()(connect(mapStateToProps, {booksLoaded})(BookList));
+export default withBookStoreService()(connect(mapStateToProps, mapDispatchToProps)(BookList));

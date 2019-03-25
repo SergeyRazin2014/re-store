@@ -4,13 +4,15 @@ const ShoppingCartTable = () => {
     return (
         <div>
             <h2>Your order</h2>
-            <table border="1"  cellSpacing="0" >
+            <table border="1" cellSpacing="0" >
                 <thead>
-                    <th>#</th>
-                    <th>Item</th>
-                    <th>Count</th>
-                    <th>Price</th>
-                    <th>Action</th>
+                    <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th>Count</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
