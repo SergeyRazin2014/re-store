@@ -1,35 +1,53 @@
 const initialState = {
     books: [],
     loading: true,
-    error: null
+    error: null,
+    cartItems: [
+        {
+            id: 1,
+            title: 'book1',
+            count: 3,
+            total: 150
+        },
+        {
+            id: 2,
+            title: 'book2',
+            count: 1,
+            total: 250
+        }
+    ],
+    orderTotal: 220
 }
 
-//ФУНКЦИЯ РЕДУСЕР (ОНА ВОЗВРАЩАЕТ НОВОЕ СОСТОЯНИЕ(СТЕЙТ) ПРИ ТОМ ИЛИ ИНОМ СОБЫТИИ
+
 const reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case 'FETCH_BOOKS_REQUESTED':
             return {
-                books: [], //ТУТ МОЖЕМ С ЧИСТОЙ СОВЕСТЬЮ ПОСТАВИТЬ ПУСТОЙ МАССИВ Т.К. ПОСЛЕ ЭТОГО АКШН МЕТОДА ВСЕГДУ БУДЕТ ВЫЗЫВАТЬСЯ ЗАГРУЗКА КНИГ С СЕРВЕРА И КНИГИ ПЕРЕЗАПИШУТСЯ
+                ...state,  //ЧТОБЫ НЕ ПОТЕРЯТЬ ДРУГИЕ ДАННЫЕ ДОБАВЛЯЕМ СЮДА ЭТО
+                books: [], 
                 loading: true,
                 error: null
             }
-        case 'FETCH_BOOKS_SUCCESS': //ЕСЛИ ЭТО СОБЫТИЕ - КНИГИ БЫЛИ ЗАГРУЖЕНЫ УСПЕШНО
+        case 'FETCH_BOOKS_SUCCESS': 
             return {
-                books: action.payload,  //В СТЕЙТЕ МАССИВ КНИГ ИЗМЕНЯЕТСЯ НА ЗАГРУЖЕННЫЕ КНИГИ
+                ...state,
+                books: action.payload,  
                 loading: false,
                 error: null,
             };
 
         case 'FETCH_BOOKS_FAILURE':
             return {
-                books: [], //ЕСЛИ ВОЗНИКЛА ОШИБКА ПРИ ЗАГРУЗКЕ КНИГ ТО КНИГИ НАМ ПОНЯТНОЕ ДЕЛО УЖЕ НЕ НУЖНО ПОКАЗЫВАТЬ
-                loading: false, //ГОВОРИМ ЧТО ЗАГРУЗКА ЗАВЕРШЕНА
-                error: action.payload //ПЕРЕДАЕМ ЧЕРЕЗ ЭКШЕН ЗНАЧЕНИЕ ТОЙ ОШИБКИ КОТОРАЯ У НАС ПРОИЗОШЛА
+                ...state,
+                books: [], 
+                loading: false, 
+                error: action.payload 
 
             }
 
-        default: return state; //ЕСЛИ МЫ НЕ МОЖЕМ ОПРЕДЕЛИТЬ КАКОЕ СОБЫТИЕ ПРОИЗОШЛО - ВОЗВРАЩАЕМ ПРОСТО СТЕЙТ КОТОРЫЙ БЫЛ ЗАДАН НА ВХОД
+        default: return state; 
 
     }
 }
