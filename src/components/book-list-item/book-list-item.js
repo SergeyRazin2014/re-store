@@ -1,13 +1,12 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 
-const BookListItem = ({ book }) => {
-    const { title, author } = book;
+const BookListItem = ({ book, onAddedToCart }) => {
+    const { id, title, author } = book;
     return (
-        <Fragment>
-            <span>{title}</span>
-            <span>{author}</span>
-        </Fragment>
+        <div>
+            <span>{title}</span> | <span>{author}</span> | <button onClick={onAddedToCart} >купить</button>
+        </div>
     );
 }
 
-export default BookListItem;
+export default BookListItem; 

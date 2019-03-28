@@ -1,13 +1,13 @@
 const booksLoaded = (newBooks) => {
     return {
-        type: 'FETCH_BOOKS_SUCCESS',  //МОЖНО ЭТИ СТРОКОВЫЕ КОНСТАНТЫ ВЫНОСИТЬ В ОТДЕЛЬНЫЙ ФАЙЛ
+        type: 'FETCH_BOOKS_SUCCESS',
         payload: newBooks
     }
 }
 
 const booksRequested = () => {
     return {
-        type: 'FETCH_BOOKS_REQUESTED'  
+        type: 'FETCH_BOOKS_REQUESTED'
     }
 }
 
@@ -17,6 +17,13 @@ const booksError = (error) => {
         payload: error
     }
 
+}
+
+const bookAddedToCart = (bookId) => {
+    return {
+        type: 'BOOK_ADDED_TO_CART',
+        payload: bookId
+    }
 }
 
 
@@ -36,11 +43,6 @@ const fetchBooks = (bookstoreService, dispatch) => () => {
 
 
 
-//Т.К. АКШН КРЕАТОРЫ: booksLoaded, booksRequested, booksError ИСПОЛЬЗУЮТСЯ ТОЛЬКО С fetchBooks, ТО ИХ ЭКСПОРТИРОВАТЬ ТЕПЕРЬ НЕ НУЖНО ЭКСПОРТИРУЕМ ПРОСТО fetchBooks
-// export {
-//     booksLoaded,
-//     booksRequested,
-//     booksError,
-// };
 
-export { fetchBooks };
+
+export { fetchBooks, bookAddedToCart };

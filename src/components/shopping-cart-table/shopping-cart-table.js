@@ -5,7 +5,7 @@ const ShoppingCartTable = ({ items, total, onIncreace, onDecreace, onDelete }) =
 
 
     let itemsElements = items.map((item, index) => {
-        return (<tr>
+        return (<tr key={item.id}>
             <td>{index + 1}</td>
             <td>{item.title}</td>
             <td>{item.count}</td>

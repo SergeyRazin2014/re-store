@@ -2,16 +2,16 @@ import React from 'react';
 import BookListItem from '../book-list-item';
 import { connect } from 'react-redux';
 import { withBookStoreService } from '../hoc';
-import { fetchBooks } from '../../actions';
+import { fetchBooks, bookAddedToCart } from '../../actions';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
 
 
-const BookList = ({ books }) => {
+const BookList = ({ books, onAddedToCart }) => {
 
     let bookListItems = books.map((book) => {
-        return <li key={book.id} ><BookListItem book={book} /></li>
+        return <li key={book.id} ><BookListItem book={book} onAddedToCart={() => onAddedToCart(book.id)} /></li>
     })
 
     return (
@@ -27,14 +27,12 @@ class BookListContainer extends React.Component {
 
     //МЕТОД ЖИЗНЕННОГО ЦИКЛА
     componentDidMount() {
-
         this.props.fetchBooks();
-
     }
 
     render() {
 
-        const { books, loading, error } = this.props;
+        const { books, loading, error, onAddedToCart } = this.props;
 
         if (loading) {
             return <Spinner />
@@ -44,13 +42,9 @@ class BookListContainer extends React.Component {
             return <ErrorIndicator />
         }
 
-        return <BookList books={books} />
+        return <BookList books={books} onAddedToCart={onAddedToCart} />
     }
 }
-
-
-
-
 
 
 const mapStateToProps = ({ books, loading, error }) => { //БЕРЕТ ДАННЫЕ ИЗ ГЛОБАЛЬНОГО СТЕЙТА И ПЕРЕДАЕТ ИХ ДАННОМУ КОМПОНЕНТУ
@@ -63,9 +57,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     const { bookstoreService } = ownProps;
 
     return {
-        fetchBooks: fetchBooks(bookstoreService, dispatch)
+        fetchBooks: fetchBooks(bookstoreService, dispatch),
+        onAddedToCart: (id) => dispatch(bookAddedToCart(id))
     }
 }
 
 
-export default withBookStoreService()(connect(mapStateToProps, mapDispatchToProps)(BookListContainer));
+export default withBookStoreService()(connect(mapStateToProps, mapDispatchToProps)(BookListContainer)); //Т.К. ТУТ МЫ ВОЗВРАЩАЕМ BookListContainer, ТО mapDispatchToProps добавляет пропсы именно в BookListContainer
