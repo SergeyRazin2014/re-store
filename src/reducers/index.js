@@ -37,14 +37,17 @@ const updateCartItems = (cartItems, item, idx) => {
 //ФУНКЦИЯ ОБНОВЛЯЕТ ОДНУ ЗАПИСЬ В КАРЗИНЕ ПОКУПОК    (quantity - КОЛИЧЕСТВО КНИГ КОТОРОЕ НУЖНО ДОБАВИТЬ)
 const updateCartItem = (book, item = {}, quantity) => {
 
+    debugger;
+
     //ЕСЛИ item = undefined ТО БУДУТ БРАТЬСЯ ЗНАЧЕНИЯ ПО УМОЛЧАНИЮ
     const { id = book.id, count = 0, title = book.title, total = 0 } = item;
+
 
     return {
         id,
         title,
         count: count + quantity,
-        total: total * book.price
+        total: total + quantity * book.price
     }
 }
 
