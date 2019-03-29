@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bookAddedToCart, bookRemovedFromCart, allBooksRemovedFromCart } from '../../actions'
 
 const ShoppingCartTable = ({ items, total, onIncreace, onDecreace, onDelete }) => {
 
@@ -53,12 +54,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = () => {  //ТУТ МЫ ПОКА ЧТО НЕ ИСПОЛЬЗУЕМ dispatch Т.Е. ДАННЫЕ НЕ БУДУТ ИЗМЕНЯТЬСЯ В СТОР, НО В ПРОПС КОМПОНЕНТА ТЕСТОВЫЕ ФУНКЦИИ БУДУТ ДОБВЛЕНЫ
-    return {
-        onIncreace: (id) => alert('onIncreace ' + id),
-        onDecreace: (id) => alert('onDecreace ' + id),
-        onDelete: (id) => alert('onDelete ' + id)
-    }
+const mapDispatchToProps = {
+    onIncreace: bookAddedToCart,
+    onDecreace: bookRemovedFromCart,
+    onDelete: allBooksRemovedFromCart,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable)

@@ -26,6 +26,22 @@ const bookAddedToCart = (bookId) => {
     }
 }
 
+//УДАЛИТЬ ОДНУ ШТУКУ КНИГИ ИЗ КАРЗИНЫ
+const bookRemovedFromCart = (bookId) => {
+    return {
+        type: 'BOOK_REMOVED_FROM_CART',
+        payload: bookId
+    }
+}
+
+//УДАЛИТЬ ВСЕ КНИГИ ИЗ СТРОКИ КАРЗИНЫ
+const allBooksRemovedFromCart = (bookId) => {
+    return {
+        type: 'ALL_BOOKS_REMOVED_FROM_CART',
+        payload: bookId
+    }
+}
+
 
 //ТУТ ОБОРАЧИВАЕМ ВСЕ В ФУНКЦИЮ КОТОРАЯ ВЫЗЫВАЕТ ФУНКЦИЮ ЧТОБЫ НАШ КОМПОНЕНТ НЕ ЗАВИСЕЛ ОТ ПАРАМЕТРОВ bookstoreService, dispatch, НАШ КОМПОНЕНТ ДОЛЖЕН ПРОСТО ВЫЗЫВАТЬ ФУНКЦИЮ БЕЗ ПАРАМЕТРОВ
 //ФУНКЦИЯ С ПАРАМЕТРАМИ ВЫЗЫВАЕТСЯ ВНЕ КОМПОНЕНТА Т.Е. В mapDispatchToProps , ТЕМ САМЫМ ДОБАВЛЯЯ В ПРОПС КОМПОНЕНТА ВЛОЖЕННУЮ ФУНКЦИЮ .
@@ -45,4 +61,9 @@ const fetchBooks = (bookstoreService, dispatch) => () => {
 
 
 
-export { fetchBooks, bookAddedToCart };
+export {
+    fetchBooks,
+    bookAddedToCart,
+    bookRemovedFromCart,
+    allBooksRemovedFromCart
+};
